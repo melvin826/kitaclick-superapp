@@ -1,0 +1,7 @@
+{
+  "name": "kitaclick/backend-starter",
+  "description": "Starter placeholder for KitaClick backend",
+  "require": {
+    "php": ">=8.1"
+  }
+}
