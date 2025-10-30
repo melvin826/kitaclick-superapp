@@ -1,3 +1,22 @@
+# Node
 node_modules/
-vendor/
+.next/
 .env
+.env.local
+npm-debug.log*
+
+# Laravel
+/vendor
+/storage/*.key
+/storage/logs
+/.env
+/bootstrap/cache/*.php
+
+# Docker
+docker-compose.override.yml
+
+# OS
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
