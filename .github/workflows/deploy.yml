@@ -1,31 +1,20 @@
-name: CI & Deploy
-
+name: Deploy to DigitalOcean
 on:
   push:
-    branches: [ main ]
-
+    branches:
+      - main
 jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-
-      - name: Upload to Droplet
-        uses: appleboy/scp-action@master
+      - name: SSH to Droplet and Deploy
+        uses: appleboy/ssh-action@v1.0.0
         with:
-          host: ${{ secrets.DROPLET_HOST }}
-          username: ${{ secrets.DROPLET_USER }}
-          key: ${{ secrets.DROPLET_SSH_KEY }}
-          source: "."
-          target: "/home/${{ secrets.DROPLET_USER }}/kitaclick-superapp"
-
-      - name: Deploy via SSH
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.DROPLET_HOST }}
-          username: ${{ secrets.DROPLET_USER }}
-          key: ${{ secrets.DROPLET_SSH_KEY }}
+          host: ${{ secrets.DO_HOST }}
+          username: root
+          key: ${{ secrets.DO_SSH_KEY }}
           script: |
-            cd /home/${{ secrets.DROPLET_USER }}/kitaclick-superapp
-            docker compose pull || true
-            docker compose up -d --build
+            cd /root/kitaclick-superapp-enterprise
+            git pull origin main
+            docker-compose down
+            docker-compose up -d --build
